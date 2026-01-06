@@ -1,4 +1,4 @@
-# Bruhlang Language Specification Dictionary (v0.3)
+# Bruhlang Language Specification Dictionary (v0.4)
 
 This document is the official reference for the syntax, keywords, and core concepts of Bruhlang. It's the source of truth for the language's vibe.
 
@@ -60,6 +60,7 @@ To safely convert a variable to a new type. This is an action that creates a new
 | `num` | For any numbers, integer or float. |
 | `text` | For strings of text. |
 | `truth` | For boolean values (`facts` or `cap`). |
+| `bruh` | The built-in error type. |
 | `ghosted` | The equivalent of null or nil. Represents the absence of a value. |
 
 ## 💬 Input & Output
@@ -100,10 +101,30 @@ For bundling up code to reuse later.
 | :--- | :--- | :--- |
 | `the function is` | Defines a new function. | `the function is (doAThing)` |
 | `takes (...)` | Specifies the parameters a function accepts. | `takes (num a, text b)` |
-| `returns` | Specifies the return type of a function. | `returns truth` |
+| `returns` | Specifies the return type of a function. Can return multiple types for error handling. | `returns text or bruh` |
 | `hit up` | Calls a function. | `hit up doAThing` |
 | `with (...)` | Passes arguments to the function being called. | `with (10, "yo")` |
 | `yeet` | Returns a value from a function. | `yeet facts` |
+
+## 🗿 Error Handling
+
+Bruhlang handles predictable, expected errors with a dedicated `bruh` type and a special conditional block for checking for "bruh moments". The philosophy is to handle errors immediately and keep the main logic path clean ("keep left").
+
+| Keyword | Purpose | Example |
+| :--- | :--- | :--- |
+| `bruh` | The built-in error type. Functions can return a `bruh` to signal failure. | `the function is (X) returns text or bruh` |
+| `new bruh with` | Creates a new `bruh` error value with a descriptive text message. | `yeet new bruh with "that ain't it"` |
+| `bruh? (...)` | A special conditional block that executes only if a variable is a `bruh` type. It is used for guard clauses and early returns. | `bruh? (result) ... aight` |
+
+## 💥 Panic & Recovery
+
+For handling unexpected, catastrophic bugs (not for normal errors). This system allows a part of the program to fail and be logged without crashing the entire application.
+
+| Keyword | Purpose | Example |
+| :--- | :--- | :--- |
+| `later` | Schedules a function call to be executed just before the surrounding function exits, whether normally or during a `ragequit`. | `later hit up cleanup` |
+| `ragequit with` | Triggers a panic state with a descriptive **text** message. This signals a critical, unrecoverable bug. | `ragequit with "ran out of memory"` |
+| `chill()` | A special built-in function, only for use in `later` blocks. It stops a `ragequit` and returns the `text` value passed to it. If no `ragequit` is happening, it returns `ghosted`. | `vibe reason is now chill()` |
 
 ## 💼 Bags, Imports, & Visibility
 
