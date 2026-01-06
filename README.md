@@ -1,4 +1,4 @@
-# Bruhlang Language Specification Dictionary (v0.4)
+# Bruhlang Language Specification Dictionary (v0.4.1)
 
 This document is the official reference for the syntax, keywords, and core concepts of Bruhlang. It's the source of truth for the language's vibe.
 
@@ -21,16 +21,16 @@ For when you need to explain something `sus`.
 
 ## ✨ The Vibe System (Variables & Types)
 
-The core system for creating, checking, and changing variables.
+The core system for creating, checking, and changing variables. Strong vibes only bruh.
 
 ### Variable Declaration
-Declaration is done using the `vibe` keyword, followed by a chain of facts about the variable.
+Declaration is done using the `vibe` keyword. Use a colon (`:`) to provide an explicit type annotation.
 
 | Declaration Style | Syntax | Purpose |
 | :--- | :--- | :--- |
-| **Type Inference** | `vibe <name> is now <value>` | Declares a variable and infers its type from the initial value. |
-| **Type-Only** | `vibe <name> is <type>` | Declares a variable with a specific type, initialized to `ghosted`. |
-| **Explicit Type & Value** | `vibe <name> is <type> is now <value>` | Declares a variable with an explicit type and an initial value. |
+| **Type Inference** | `vibe <name> is now <value>` | Declares a variable and infers its type from the initial value. This is the most common style. |
+| **Type-Only** | `vibe <name>: <type>` | Declares a variable with a specific type, initialized to `ghosted`. |
+| **Explicit Type & Value** | `vibe <name>: <type> is now <value>` | Declares a variable with an explicit type and an initial value, for maximum clarity. |
 
 ### Constants
 For values that should never change.
