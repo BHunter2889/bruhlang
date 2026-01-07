@@ -1,4 +1,4 @@
-# Bruhlang Language Specification Dictionary (v0.4.1)
+# Bruhlang Language Specification Dictionary (v0.4.2)
 
 This document is the official reference for the syntax, keywords, and core concepts of Bruhlang. It's the source of truth for the language's vibe.
 
@@ -13,11 +13,12 @@ The basic scaffolding of any Bruhlang script.
 
 ## 🤫 Comments
 
-For when you need to explain something `sus`.
+For when you need to explain something `sus`, whether it's a one-liner or a whole story.
 
 | Syntax | Purpose | Example |
 | :--- | :--- | :--- |
-| `sus:` | A single-line comment. The compiler will ignore this line. | `sus: this part is tricky, ngl` |
+| `sus:` | A single-line comment. The compiler ignores the rest of the line. | `sus: this part is tricky, ngl` |
+| `sus:{ ... }`| A multi-line comment block. The compiler ignores everything between the braces. Used for long explanations or for temporarily disabling code. | `sus:{ vibe x is now "disabled" }` |
 
 ## ✨ The Vibe System (Variables & Types)
 
