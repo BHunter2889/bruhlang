@@ -1,4 +1,4 @@
-# Bruhlang Language Specification Dictionary (v0.4.2)
+# Bruhlang Language Specification Dictionary (v0.5)
 
 This document is the official reference for the syntax, keywords, and core concepts of Bruhlang. It's the source of truth for the language's vibe.
 
@@ -96,16 +96,26 @@ For doing things over and over.
 
 ## 🤙 Functions
 
-For bundling up code to reuse later.
+For bundling up code to reuse later. Bruhlang uses a standard `functionName(...)` syntax for all function calls, making the code clean and instantly familiar.
 
 | Keyword | Purpose | Example |
 | :--- | :--- | :--- |
-| `the function is` | Defines a new function. | `the function is (doAThing)` |
-| `takes (...)` | Specifies the parameters a function accepts. | `takes (num a, text b)` |
-| `returns` | Specifies the return type of a function. Can return multiple types for error handling. | `returns text or bruh` |
-| `hit up` | Calls a function. | `hit up doAThing` |
-| `with (...)` | Passes arguments to the function being called. | `with (10, "yo")` |
-| `yeet` | Returns a value from a function. | `yeet facts` |
+| `the function` | Starts the definition of a new function. | `the function doAThing` |
+| `takes (...)` | Specifies the parameters a function accepts in its definition. | `takes (num a, text b)` |
+| `returns` | Specifies the return type(s). Use `or` for alternative types or `()` for multiple simultaneous types. | `returns text or bruh` <br> `returns (text, bruh)` |
+| `yeet` | Returns one or more values from a function. | `yeet facts` <br> `yeet user, err` |
+
+### Multiple Return Values
+Bruhlang functions can return multiple values, which is the standard way to handle errors. The return signature can also optionally name the values for documentation purposes, using the standard colon (`:`) annotation.
+
+| Part | Syntax | Example |
+| :--- | :--- | :--- |
+| **Signature (Unnamed)** | `returns (<type1, type2>)` | `returns (text, bruh)` |
+| **Signature (Named)** | `returns (<name1: type1, ...>)` | `returns (user: text, err: bruh)` |
+| **Return Action** | `yeet <value1, value2, ...>` | `yeet "Success", ghosted` |
+| **Receiving** | `vibes <var1, var2, ...> are now funcName(...)`| `vibes user, err are now getUser(1)`|
+
+**Note:** ***🚫 NO NUDE YEETING.*** Bruhlang requires explicit `yeet`s. "Naked" returns are not allowed. The names provided in a return signature are for **documentation purposes only** and do not change the positional nature of the return values. They cannot be used for named destructuring.
 
 ## 🗿 Error Handling
 
