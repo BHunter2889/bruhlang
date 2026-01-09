@@ -232,6 +232,114 @@ The words you use to do math and make comparisons.
 | `facts` | Represents truth. |
 | `cap` | Represents falsehood. |
 
+***
+
+# Example App
+
+## Welcome to Bruhlang: Your First App
+Let's build a simple command-line app that calls a web API. This will show you how Bruhlang handles everything from modern function calls and modules (we call them `bags`) to a full spectrum of error and panic handling.
+
+Our app will have two parts:
+1.  **`api-bag.bruh`**: A reusable "bag" of tools for talking to our API.
+2.  **`main.bruh`**: Our main app that uses the bag and is built to survive anything the bag throws at it.
+
+### 1. The Library: `api-bag.bruh`
+This is our reusable code. We're creating a tool that other scripts can use. We use `highkey` to make our `Get` function public so other bags can `dip into` it.
+
+```
+// File: api-bag.bruh
+sus: in the 'api-bag'
+
+sup
+  highkey the function Get takes (url: text) returns (data: text, errin: bruh)
+    fr? (url is "https://api.example.com/vibe")
+      sus: Happy path: yeet the good data and a ghosted error.
+      yeet "{""data"": ""vibe is immaculate""}", ghosted
+
+    or like, fr? (url is "https://api.example.com/ghosted")
+      sus: Predictable error (404 Not Found): yeet empty data and a new bruh.
+      yeet "", new bruh with "404: that endpoint is ghosted"
+
+    or like, fr? (url is "https://api.example.com/corrupt")
+      sus: Catastrophic failure: The server sent us garbage data.
+      sus: This is a ragequit moment for our internal parser.
+      ragequit with "internal parser error: malformed data"
+
+    nah
+      yeet "", new bruh with "400: bad request"
+    aight
+  bet
+k bye
+```
+
+### 2. The Main App: `main.bruh`
+This is the script we'll actually run. Because `api-bag.Get` can `ragequit`, we create a "wrapper" function (`safeApiCall`) that acts as a safety harness. It catches any potential panics and turns them into regular `bruh` moments for our app to handle.
+
+```
+// File: main.bruh
+sup
+  dip into 'api-bag'
+
+  sus: This "safe" function calls the risky API but has a safety net.
+  the function safeApiCall takes (url: text) returns (text, errin: bruh)
+    sus: The 'later' block runs before this function exits, no matter what.
+    later
+      vibe thePanic is now chill()  sus: 'chill()' catches a ragequit.
+      fr? (thePanic is not ghosted)
+        sus: If we caught one, turn it into a normal 'bruh' and yeet it.
+        yeet "", new bruh with "PANIC CAUGHT: " plus thePanic
+      aight
+    bet
+
+    sus: We call the function and yeet its results directly.
+    yeet api-bag.Get(url)
+  bet
+
+  spill "--- Hitting up the API ---"
+
+  sus: We use 'vibes' to catch the multiple return values.
+  vibes response, errin are now safeApiCall("https://api.example.com/corrupt")
+
+  sus: Now we check ONLY the 'errin' vibe. Clean "keep left" error handling.
+  bruh? (errin)
+    spill "--- BRUH MOMENT ---"
+    spill "The app caught an error: " plus errin
+    k bye  sus: We decided this error is fatal. End the script.
+  aight
+
+  spill "--- VIBE CHECK: PASSED ---"
+  spill "Success! API Response: " plus response
+k bye
+```
+
+### Running the App: Three Possible Vibes
+By changing the URL in the `safeApiCall` in `main.bruh`, you can see all three paths.
+
+**1. The Happy Path (URL: `"https://api.example.com/vibe"`)**
+> --- Hitting up the API ---
+> --- VIBE CHECK: PASSED ---
+> Success! API Response: {"data": "vibe is immaculate"}
+
+**2. The Bruh Moment (URL: `"https://api.example.com/ghosted"`)**
+> --- Hitting up the API ---
+> --- BRUH MOMENT ---
+> The app caught an error: 404: that endpoint is ghosted
+
+**3. The `ragequit` (URL: `"https://api.example.com/corrupt"`)**
+> --- Hitting up the API ---
+> --- BRUH MOMENT ---
+> The app caught an error: PANIC CAUGHT: internal parser error: malformed data
+
+### The Vibe Explained: What You Just Saw
+This simple app shows off the core of Bruhlang:
+
+*   **Explicit Error Handling:** We use multiple return values (`returns (data: text, errin: bruh)`) as the standard way to handle predictable errors. `errin` is the conventional name for error vibes.
+*   **Resilience (`ragequit`/`chill`):** Bruhlang is built to survive a catastrophe. Our app can "catch" a `ragequit` from a dependency and turn it into a manageable `bruh` moment, preventing a crash.
+*   **Chilled Out Slappin' Vibe:** While Bruhlang (aka "bruh" for those who know...) is pulls its vibe from the highly prescriptive no-nonsense simplicity of Go, a significant amount of boiler plate and cold syntax of The Ancient Arts has been chilled out.
+*   **Natural Language Flow:** Bruh is meant to feel natural, like a conversation, or vibing an explicit instruction set to a no cap based bruh. Symbols from the traditional languages of The Ancient Arts are mere relics here, and used only when they enhance readability, and optionally (i.e. in the case of math operators) at a bruh's discretion when the vibe needs to hit different. 
+
+It's a language designed from the ground up to be both fun to write and seriously safe to run.
+
 ## Status of this Document & Legal Notices
 This is an early soft-release spec that is being made available for feedback, input, and to guage interest level for contributing. Other parties may have some claim to this but the intent is to discuss the best licensing option as a community of contributors once such a degree of community interest is established. Please contact the repository owner @BHunter2889 for guaging interest, who may also be reached on Discord: @dadderall_42mg.
 
