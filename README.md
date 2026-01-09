@@ -1,4 +1,4 @@
-# Bruhlang Language Specification Dictionary (v0.5)
+# Bruhlang Language Specification Dictionary (v0.5.1)
 
 This document is the official reference for the syntax, keywords, and core concepts of Bruhlang. It's the source of truth for the language's vibe.
 
@@ -39,6 +39,23 @@ For values that should never change.
 | Keyword | Purpose | Example |
 | :--- | :--- | :--- |
 | `locked` | Declares a constant (an immutable variable). Its value cannot be changed. | `locked URL is now "https://example.com"` |
+
+### Block Declaration
+
+In addition to single-line declarations, Bruhlang supports a block syntax for declaring a group of related variables or constants. Use the plural `vibes` for a block of variables. The `locked` keyword remains singular as it describes the state of the entire block.
+
+```
+vibes (
+  name: text is now "Brandon"
+  age: num is now 30
+  isReady is now facts
+)
+
+locked (
+  StatusOK: num is now 200
+  StatusError: num is now 500
+)
+```
 
 ### Type Checking
 To check a variable's type, use the `clock` operator within a conditional. This is a read-only action that identifies the variable's current type.
