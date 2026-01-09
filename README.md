@@ -2,6 +2,23 @@
 
 This document is the official reference for the syntax, keywords, and core concepts of Bruhlang. It's the source of truth for the language's vibe.
 
+## Contents
+1.  [📜 Program Structure](#-program-structure)
+2.  [🤫 Comments](#-comments)
+3.  [✨ The Vibe System (Variables & Types)](#-the-vibe-system-variables--types)
+4.  [💬 Input & Output](#-input--output)
+5.  [🤔 Conditionals](#-conditionals)
+6.  [🔁 Loops](#-loops)
+7.  [🤙 Functions](#-functions)
+8.  [🗿 Error Handling](#-error-handling)
+9.  [💥 Panic & Recovery](#-panic--recovery)
+10. [💼 Bags, Imports, & Visibility](#-bags-imports--visibility)
+11. [🔣 Operators & Logic](#-operators--logic)
+12. [Example App](#example-app)
+13. [Status of this Document & Legal Notices](#status-of-this-document--legal-notices)
+
+***
+
 ## 📜 Program Structure
 
 The basic scaffolding of any Bruhlang script.
