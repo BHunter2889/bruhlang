@@ -1,21 +1,23 @@
-# Bruhlang Language Specification Dictionary (v0.5.2)
+# Bruhlang Language Specification Dictionary (v0.6)
 
 This document is the official reference for the syntax, keywords, and core concepts of Bruhlang. It's the source of truth for the language's vibe.
 
 ## Contents
+
 1.  [📜 Program Structure](#-program-structure)
 2.  [🤫 Comments](#-comments)
 3.  [✨ The Vibe System (Variables & Types)](#-the-vibe-system-variables--types)
-4.  [💬 Input & Output](#-input--output)
-5.  [🤔 Conditionals](#-conditionals)
-6.  [🔁 Loops](#-loops)
-7.  [🤙 Functions](#-functions)
-8.  [🗿 Error Handling](#-error-handling)
-9.  [💥 Panic & Recovery](#-panic--recovery)
-10. [💼 Bags, Imports, & Visibility](#-bags-imports--visibility)
-11. [🔣 Operators & Logic](#-operators--logic)
-12. [Example App](#example-app)
-13. [Status of this Document & Legal Notices](#status-of-this-document--legal-notices)
+4.  [🔣 Operators & Logic](#-operators--logic)
+5.  [🎶 Lists/Arrays (aka "Playlists")](#-listsarrays-aka-playlists)
+6.  [💬 Input & Output](#-input--output)
+7.  [🤔 Conditionals](#-conditionals)
+8.  [🔁 Loops](#-loops)
+9.  [🤙 Functions](#-functions)
+10. [🗿 Error Handling](#-error-handling)
+11. [💥 Panic & Recovery](#-panic--recovery)
+12. [💼 Bags, Imports, & Visibility](#-bags-imports--visibility)
+13. [Example App](#example-app)
+14. [Status of this Document & Legal Notices](#status-of-this-document--legal-notices)
 
 ***
 
@@ -97,6 +99,62 @@ To safely convert a variable to a new type. This is an action that creates a new
 | `truth` | For boolean values (`facts` or `cap`). |
 | `bruh` | The built-in error type. |
 | `ghosted` | The equivalent of null or nil. Represents the absence of a value. |
+| `playlist[<type>]` | A `playlist` (ordered list) of a specific type. |
+
+## 🔣 Operators & Logic
+
+The words you use to do math and make comparisons.
+
+### Math
+
+| Operator | Purpose |
+| :--- | :--- |
+| `plus` | Addition |
+| `minus` | Subtraction |
+| `times` | Multiplication |
+| `over` | Division |
+| `mod` | Modulo (remainder) |
+
+### Comparison & Logic
+
+| Operator | Purpose |
+| :--- | :--- |
+| `is` | Equality (`==`) |
+| `is not` | Inequality (`!=`) |
+| `is more than` | Greater than (`>`) |
+| `is less than` | Less than (`<`) |
+| `and` | Logical AND |
+| `or` | Logical OR |
+| `not` | Logical NOT |
+
+### Boolean Values
+
+| Value | Vibe |
+| :--- | :--- |
+| `facts` | Represents truth. |
+| `cap` | Represents falsehood. |
+
+## 🎶 Lists/Arrays (aka "Playlists") 
+
+A `playlist` is the fundamental ordered collection type in Bruhlang. It's a strongly-typed list of items where the order is guaranteed. The syntax is designed to be thematic, consistent, and safe.
+
+### Declaration & Access
+
+| Play | Syntax | Example |
+| :--- | :--- | :--- |
+| **Literal** | `vibe <name> is now [<val1>, <val2>]` | `vibe names is now ["Brandon", "Skyler"]` |
+| **Typed (Empty)**| `vibe <name>: playlist[<type>]` | `vibe scores: playlist[num]` |
+| **Typed (w/ Value)** | `vibe <name>: playlist[<type>] is now [...]` | `vibe names: playlist[text] is now ["Brandon"]` |
+| **Access by Index**| `<playlist>[<index>]` | `vibe theOG is now names[0]` |
+
+### Built-in Operations
+`playlist` operations are safe and immutable. Functions like `stack` and `kick` do not change the original `playlist`; they return a new one with the changes.
+
+| Play | Syntax | The Vibe |
+| :--- | :--- | :--- |
+| **Get Length** | `length of <playlist>` | Returns the number of items in the `playlist`. |
+| **Add Item** | `stack(<playlist>, <newItem>)` | Returns a new `playlist` with the item added to the end. |
+| **Remove Item** | `kick(<playlist>, <index>)` | Returns a new `playlist` with the item at the specified index removed. |
 
 ## 💬 Input & Output
 
@@ -127,6 +185,22 @@ For doing things over and over.
 | `keep it a hunnid i from 1 to 100` | A standard "for" loop that iterates a counter within a range. | `keep it a hunnid i from 1 to 10` |
 | `so long as (...)` | A "while" loop. Continues as long as the condition is `facts`. | `so long as (isWorking is facts)` |
 | `bet` | Closes any loop block. | `bet` |
+
+### Collection Iteration, aka "Spinning Vibes"
+To loop over the items, aka "vibes", in a `playlist`, use the `spin every` construct. This is the standard "for-each" loop in Bruhlang, designed to be thematic, clear, and concise.
+
+| Construct | Purpose |
+| :--- | :--- |
+| `spin every <item> in <playlist>` | Iterates over each item in a `playlist`, assigning the current item to the given variable for each loop. |
+
+Example: 
+``` 
+vibe thePlaylist: playlist[text] is now ["first vibe", "second vibe"]
+
+spin every song in thePlaylist
+  spill "Now spinning: " plus song
+bet
+```
 
 ## 🤙 Functions
 
@@ -215,39 +289,6 @@ This method pulls specific `highkey` items from a bag directly into your file's 
 | `grab` | Imports one or more named items from a bag. | `grab Add, PI from 'math-bag'` |
 | `from` | Used with `grab` to specify the source bag. | `grab Add from 'math-bag'` |
 | `aka` | Aliases an imported item with a new name to avoid naming conflicts. | `grab Add aka Plus from 'math-bag'` |
-
-## 🔣 Operators & Logic
-
-The words you use to do math and make comparisons.
-
-### Math
-
-| Operator | Purpose |
-| :--- | :--- |
-| `plus` | Addition |
-| `minus` | Subtraction |
-| `times` | Multiplication |
-| `over` | Division |
-| `mod` | Modulo (remainder) |
-
-### Comparison & Logic
-
-| Operator | Purpose |
-| :--- | :--- |
-| `is` | Equality (`==`) |
-| `is not` | Inequality (`!=`) |
-| `is more than` | Greater than (`>`) |
-| `is less than` | Less than (`<`) |
-| `and` | Logical AND |
-| `or` | Logical OR |
-| `not` | Logical NOT |
-
-### Boolean Values
-
-| Value | Vibe |
-| :--- | :--- |
-| `facts` | Represents truth. |
-| `cap` | Represents falsehood. |
 
 ***
 
@@ -361,3 +402,4 @@ It's a language designed from the ground up to be both fun to write and seriousl
 This is an early soft-release spec that is being made available for feedback, input, and to guage interest level for contributing. Other parties may have some claim to this but the intent is to discuss the best licensing option as a community of contributors once such a degree of community interest is established. Please contact the repository owner @BHunter2889 for guaging interest, who may also be reached on Discord: @dadderall_42mg.
 
 Copyright © 2025-2026 Brandon Hunter and Bruhlang contributors. All rights reserved.
+
