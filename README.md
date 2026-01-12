@@ -292,45 +292,43 @@ This method pulls specific `highkey` items from a bag directly into your file's 
 
 ***
 
-# Example App
+## Example App
 
-## Welcome to Bruhlang: Your First App
+### Welcome to Bruhlang: Building a Resilient App
 Let's build a simple command-line app that calls a web API. This will show you how Bruhlang handles everything from modern function calls and modules (we call them `bags`) to a full spectrum of error and panic handling.
 
 Our app will have two parts:
 1.  **`api-bag.bruh`**: A reusable "bag" of tools for talking to our API.
 2.  **`main.bruh`**: Our main app that uses the bag and is built to survive anything the bag throws at it.
 
-### 1. The Library: `api-bag.bruh`
-This is our reusable code. We're creating a tool that other scripts can use. We use `highkey` to make our `Get` function public so other bags can `dip into` it.
+#### 1. The Library: `api-bag.bruh`
+This is our reusable code. Notice it has no `sup` or `k bye` block because it's a library, not a runnable script. It just provides a `highkey` function for other files to use.
 
 ```
 // File: api-bag.bruh
 sus: in the 'api-bag'
 
-sup
-  highkey the function Get takes (url: text) returns (data: text, errin: bruh)
-    fr? (url is "https://api.example.com/vibe")
-      sus: Happy path: yeet the good data and a ghosted error.
-      yeet "{""data"": ""vibe is immaculate""}", ghosted
+highkey the function Get takes (url: text) returns (data: text, errin: bruh)
+  fr? (url is "https://api.example.com/vibe")
+    sus: Happy path: yeet the good data and a ghosted error.
+    yeet "{""data"": ""vibe is immaculate""}", ghosted
 
-    or like, fr? (url is "https://api.example.com/ghosted")
-      sus: Predictable error (404 Not Found): yeet empty data and a new bruh.
-      yeet "", new bruh with "404: that endpoint is ghosted"
+  or like, fr? (url is "https://api.example.com/ghosted")
+    sus: Predictable error (404 Not Found): yeet empty data and a new bruh.
+    yeet "", new bruh with "404: that endpoint is ghosted"
 
-    or like, fr? (url is "https://api.example.com/corrupt")
-      sus: Catastrophic failure: The server sent us garbage data.
-      sus: This is a ragequit moment for our internal parser.
-      ragequit with "internal parser error: malformed data"
+  or like, fr? (url is "https://api.example.com/corrupt")
+    sus: Catastrophic failure: The server sent us garbage data.
+    sus: This is a ragequit moment for our internal parser.
+    ragequit with "internal parser error: malformed data"
 
-    nah
-      yeet "", new bruh with "400: bad request"
-    aight
-  bet
-k bye
+  nah
+    yeet "", new bruh with "400: bad request"
+  aight
+bet
 ```
 
-### 2. The Main App: `main.bruh`
+#### 2. The Main App: `main.bruh`
 This is the script we'll actually run. Because `api-bag.Get` can `ragequit`, we create a "wrapper" function (`safeApiCall`) that acts as a safety harness. It catches any potential panics and turns them into regular `bruh` moments for our app to handle.
 
 ```
