@@ -1,4 +1,4 @@
-# Bruhlang Language Specification Dictionary (v0.5.1)
+# Bruhlang Language Specification Dictionary (v0.5.2)
 
 This document is the official reference for the syntax, keywords, and core concepts of Bruhlang. It's the source of truth for the language's vibe.
 
@@ -21,12 +21,12 @@ This document is the official reference for the syntax, keywords, and core conce
 
 ## 📜 Program Structure
 
-The basic scaffolding of any Bruhlang script.
+Bruhlang distinguishes between executable files and library files (bags). The presence of a `sup` / `k bye` block designates a file as the main, runnable entry point of a program. Files without this block are treated as libraries intended to be imported.
 
 | Keyword | Purpose | Example |
 | :--- | :--- | :--- |
-| `sup` | Kicks off the program. The first word in any script. | `sup` |
-| `k bye` | Ends the program. The last line in any script. | `k bye` |
+| `sup` | Marks the beginning of the main execution block in a runnable script. | `sup` |
+| `k bye` | Marks the end of the main execution block in a runnable script. | `k bye` |
 
 ## 🤫 Comments
 
